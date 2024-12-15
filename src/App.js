@@ -3,80 +3,82 @@ import axios from "axios";
 import "./App.css";
 
 function App() {
-  const [data, setData] = useState({});
-  const [location, setLocation] = useState("Loading...");
-  const [loading, setLoading] = useState(true);
+  const [serverInfo, setServerInfo] = useState({});
+  const [battery, setBattery] = useState("Fetching...");
+  const [deviceInfo, setDeviceInfo] = useState({});
+  const [networkInfo, setNetworkInfo] = useState("Unknown");
 
-  const fetchData = async () => {
+  // Fetch server system info
+  const fetchServerInfo = async () => {
     try {
-      const response = await axios.get("https://robotair-fullstack-assignment.onrender.com/system-info");
-      setData(response.data); 
+      const response = await axios.get("http://127.0.0.1:8000/system-info");
+      setServerInfo(response.data);
     } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false);
+      console.error("Error fetching server info:", error);
     }
   };
 
-  const fetchLocation = async () => {
-    try {
-      const response = await axios.get("https://ipinfo.io/json?token=add3137c56d573");
-      const { city, region } = response.data;
-      setLocation(`${city}, ${region}`);
-    } catch (error) {
-      console.error("Error fetching location:", error);
-      setLocation("Unknown");
+  // Fetch battery status
+  const fetchBatteryStatus = () => {
+    if (navigator.getBattery) {
+      navigator.getBattery().then((battery) => {
+        setBattery(`${Math.round(battery.level * 100)}%`);
+      });
+    } else {
+      setBattery("Battery API Not Supported");
+    }
+  };
+
+  // Fetch device info
+  const fetchDeviceInfo = () => {
+    setDeviceInfo({
+      platform: navigator.platform,
+      memory: navigator.deviceMemory || "Unknown",
+    });
+
+    if (navigator.connection) {
+      setNetworkInfo(navigator.connection.effectiveType || "Unknown");
+    } else {
+      setNetworkInfo("Not Supported");
     }
   };
 
   useEffect(() => {
-    fetchData();
-    fetchLocation();
-    const interval = setInterval(fetchData, 5000); 
+    // Initial fetch
+    fetchServerInfo();
+    fetchBatteryStatus();
+    fetchDeviceInfo();
+
+    // Update every 5 seconds
+    const interval = setInterval(() => {
+      fetchServerInfo();
+      fetchBatteryStatus();
+    }, 5000);
+
+    // Cleanup interval on unmount
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="app-container">
-      <div className="center-title">System Info</div>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <div className="info-cards">
-          <div className="card">
-            <strong>Time</strong>
-            <span>{data.time}</span>
-          </div>
-          <div className="card">
-            <strong>Python Version</strong>
-            <span>{data.python_version}</span>
-          </div>
-          <div className="card">
-            <strong>Battery</strong>
-            <span>{data.battery}</span>
-          </div>
-          <div className="card">
-            <strong>CPU Usage</strong>
-            <span>{data.cpu_usage}</span>
-          </div>
-          <div className="card">
-            <strong>RAM Usage</strong>
-            <span>{data.ram_usage}</span>
-          </div>
-          <div className="card">
-            <strong>Temperature</strong>
-            <span>{data.temperature}</span>
-          </div>
-          <div className="card">
-            <strong>GPU Usage</strong>
-            <span>{data.gpu_usage}</span>
-          </div>
-          <div className="card">
-            <strong>Location</strong>
-            <span>{location}</span>
-          </div>
-        </div>
-      )}
+      <h1>System Resource Dashboard</h1>
+      <div className="info-cards">
+        <div className="card"><strong>Time:</strong> {serverInfo.time}</div>
+        <div className="card"><strong>Python Version:</strong> {serverInfo.python_version}</div>
+        <div className="card"><strong>Python Info:</strong> {serverInfo.python_info}</div>
+        <div className="card"><strong>Battery:</strong> {serverInfo.battery}</div>
+        <div className="card"><strong>CPU Usage:</strong> {serverInfo.cpu_usage}</div>
+        <div className="card"><strong>RAM Usage:</strong> {serverInfo.ram_usage}</div>
+        <div className="card"><strong>Current Time:</strong> {serverInfo.current_time}</div>
+        <div className="card"><strong>Server Location:</strong> {serverInfo.location}</div>
+      </div>
+
+      <div className="info-cards">
+        <div className="card"><strong>Battery Level:</strong> {battery}</div>
+        <div className="card"><strong>Operating System:</strong> {deviceInfo.platform}</div>
+        <div className="card"><strong>Approx RAM:</strong> {deviceInfo.memory} GB</div>
+        <div className="card"><strong>Network Type:</strong> {networkInfo}</div>
+      </div>
     </div>
   );
 }
