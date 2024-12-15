@@ -1,0 +1,70 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: rgb(147, 141, 248);
+}
+
+.center-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.info-cards {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, #d7d5e1a1, #8a40e5);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  position: absolute;
+  width: 120px;
+  height: 90px;
+  padding: 10px;
+  border-radius: 50px;
+  background-color: #b0f2ff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+  transform-origin: center;
+}
+
+/* Position cards around the circle (outside the edge) */
+.card:nth-child(1) { transform: rotate(0deg) translate(330px) rotate(0deg); }
+.card:nth-child(2) { transform: rotate(45deg) translate(330px) rotate(-45deg); }
+.card:nth-child(3) { transform: rotate(90deg) translate(310px) rotate(-90deg); }
+.card:nth-child(4) { transform: rotate(135deg) translate(330px) rotate(-135deg); }
+.card:nth-child(5) { transform: rotate(180deg) translate(330px) rotate(-180deg); }
+.card:nth-child(6) { transform: rotate(225deg) translate(330px) rotate(-225deg); }
+.card:nth-child(7) { transform: rotate(270deg) translate(310px) rotate(-270deg); }
+.card:nth-child(8) { transform: rotate(315deg) translate(330px) rotate(-315deg); }
+
+.card strong {
+  font-size: 0.8rem;
+  color: #555;
+}
+
+.card span {
+  margin-top: 5px;
+  font-size: 0.85rem;
+  color: #333;
+}
