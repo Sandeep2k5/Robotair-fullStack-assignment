@@ -34,16 +34,12 @@ The application consists of a **FastAPI backend** and a **React frontend**, with
   - Location (via IP-based API)
 
 - **Auto-refresh** every 5 seconds for updated information.  
-- **Modern UI**: Organized and clean layout for easy data visualization.  
-- **Cross-Origin Support**: Smooth backend-to-frontend communication enabled via CORS.
-
 ---
 
 ## **Technologies Used**
 
 ### **Frontend**  
 - **React.js**  
-- **Axios**: For making API requests  
 - **CSS**: For UI styling  
 - **Netlify**: For frontend hosting  
 
@@ -52,6 +48,4 @@ The application consists of a **FastAPI backend** and a **React frontend**, with
 - **psutil**: For real-time system monitoring  
 - **requests**: For fetching location data using external APIs  
 - **Render**: For backend deployment  
-
-### **Containerization**  
-- **Docker**: For containerizing the frontend and backend applications  
+ 
