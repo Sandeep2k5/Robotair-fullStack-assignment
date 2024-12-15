@@ -12,13 +12,11 @@ The **System Resource Dashboard** is a full-stack application that displays **re
 - System Temperature  
 - Python Version  
 - Current Time  
-- Location (via IP-based API)  
 
 The application consists of a **FastAPI backend** and a **React frontend**, with deployment and containerization using modern tools:
 
 - **Frontend**: Hosted on **Netlify**  
 - **Backend**: Hosted on **Render**  
-- **Containerization**: Packaged using **Docker** for seamless portability.
 
 ---
 
