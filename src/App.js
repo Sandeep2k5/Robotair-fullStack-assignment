@@ -10,7 +10,7 @@ function App() {
   const fetchData = async () => {
     try {
       const response = await axios.get("https://robotair-fullstack-assignment.onrender.com/system-info");
-      setData(response.data); // Update the state with the response data
+      setData(response.data); 
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -20,7 +20,7 @@ function App() {
 
   const fetchLocation = async () => {
     try {
-      const response = await axios.get("https://ipinfo.io/json?token=YOUR_IPINFO_TOKEN"); // Replace YOUR_IPINFO_TOKEN with your token
+      const response = await axios.get("https://ipinfo.io/json?token=add3137c56d573");
       const { city, region } = response.data;
       setLocation(`${city}, ${region}`);
     } catch (error) {
@@ -32,7 +32,7 @@ function App() {
   useEffect(() => {
     fetchData();
     fetchLocation();
-    const interval = setInterval(fetchData, 5000); // Poll every 5 seconds
+    const interval = setInterval(fetchData, 5000); 
     return () => clearInterval(interval);
   }, []);
 
