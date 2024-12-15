@@ -4,12 +4,13 @@ import "./App.css";
 
 function App() {
   const [data, setData] = useState({});
+  const [location, setLocation] = useState("Loading...");
   const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/system-info");
-      setData(response.data);
+      const response = await axios.get("https://robotair-fullstack-assignment.onrender.com/system-info");
+      setData(response.data); // Update the state with the response data
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -17,9 +18,21 @@ function App() {
     }
   };
 
+  const fetchLocation = async () => {
+    try {
+      const response = await axios.get("https://ipinfo.io/json?token=YOUR_IPINFO_TOKEN"); // Replace YOUR_IPINFO_TOKEN with your token
+      const { city, region } = response.data;
+      setLocation(`${city}, ${region}`);
+    } catch (error) {
+      console.error("Error fetching location:", error);
+      setLocation("Unknown");
+    }
+  };
+
   useEffect(() => {
     fetchData();
-    const interval = setInterval(fetchData, 5000);
+    fetchLocation();
+    const interval = setInterval(fetchData, 5000); // Poll every 5 seconds
     return () => clearInterval(interval);
   }, []);
 
@@ -60,7 +73,7 @@ function App() {
           </div>
           <div className="card">
             <strong>Location</strong>
-            <span>{data.location}</span>
+            <span>{location}</span>
           </div>
         </div>
       )}
