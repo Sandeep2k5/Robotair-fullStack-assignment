@@ -9,14 +9,15 @@ function App() {
   const [networkInfo, setNetworkInfo] = useState("Unknown");
 
   // Fetch server system info
-  const fetchServerInfo = async () => {
-    try {
-      const response = await axios.get("http://127.0.0.1:8000/system-info");
-      setServerInfo(response.data);
-    } catch (error) {
-      console.error("Error fetching server info:", error);
-    }
-  };
+const fetchServerInfo = async () => {
+  try {
+    // Update to the deployed backend URL
+    const response = await axios.get("https://robotair-fullstack-assignment.onrender.com/system-info");
+    setServerInfo(response.data);
+  } catch (error) {
+    console.error("Error fetching server info:", error);
+  }
+};
 
   // Fetch battery status
   const fetchBatteryStatus = () => {
